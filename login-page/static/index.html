@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register Authentication</title>
+    <link rel="stylesheet" href="./register.css">
+</head>
+<body>
+    <div class="form">
+        <h1 style="margin-left: 4rem;">Register Form</h1>
+        <form class="register" id="register">
+            <div class="register-form">
+                <input type="text" autocapitalize="off" id="name" placeholder="Enter your name" required />
+                <input type="email" autocapitalize="off" id="email" placeholder="Enter your E-mail" required />
+                <input type="password" autocapitalize="off" id="password" placeholder="Enter your Password" required />
+            </div>
+            <br>
+            <div class="second">
+                <button type="submit" id="submit-value">Submit</button>
+                <a href="./login.html">Already Have A Account</a>
+            </div>
+        </form>
+    </div>
+    <script>
+        const form = document.getElementById("register");
+        form.addEventListener("submit", registration);
+
+        async function registration(event) {
+            event.preventDefault();
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+            const name = document.getElementById("name").value;
+            
+            const result = await fetch("/register", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    name: name,
+                    email: email,
+                    password: password
+                })
+            }).then((res) => res.json())
+
+            if (result.status === 'ok') {
+				alert('User Registered')
+			} 
+            else {
+				alert(result.error)
+			}
+        }
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="./login.css">
+</head>
+<body>
+    <div class="form">
+        <h1 style="margin-left: 3rem;">Login Form</h1>
+        <form class="login" id="login">
+            <div class="login-form">
+                <input type="email" autocapitalize="off" id="email" placeholder="Enter your E-mail" required />
+                <input type="password" autocapitalize="off" id="password" placeholder="Enter your Password" required />
+            </div>
+            <br>
+            <div class="second">
+                <button type="submit" id="submit-value">Submit</button>
+                <a href="./change-password.html">Forget Pasword</a>
+            </div>
+        </form>
+    </div>
+    <script>
+        const form = document.getElementById("login");
+        form.addEventListener("submit", login);
+
+        async function login(event) {
+            event.preventDefault();
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+
+            const result = await fetch("/login", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    email: email,
+                    password: password
+                })
+            }).then((res) => res.json());
+
+            if (result.status === 'ok') {
+                window.location.href = `/profile.html?name=${encodeURIComponent(result.data.name)}`;
+            } else {
+                alert(result.error);
+            }
+        }
+    </script>
+</body>
+</html>

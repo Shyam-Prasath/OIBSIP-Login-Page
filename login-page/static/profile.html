@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <link rel="stylesheet" href="./profile.css">
+</head>
+<body>
+    <h1>Profile Page</h1>
+    <div class="profile-form">
+        <p id="info">Loading user info...</p>
+    </div>
+    <p>Thank You For Choosing The Platform</p>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const params = new URLSearchParams(window.location.search);
+            const name = params.get('name');
+            const infoElement = document.getElementById("info");
+
+            if (name) {
+                infoElement.textContent = `Welcome, ${name}`;
+            } else {
+                infoElement.textContent = 'Failed to load user info';
+            }
+        });
+    </script>
+</body>
+</html>
